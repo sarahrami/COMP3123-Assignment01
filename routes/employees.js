@@ -6,18 +6,17 @@ const mongoose = require("mongoose");
 // fetching employees
 routes.get("/employees", async (req, res) => {
     try{
-        if(mongoose.connection.readyState !== 1){
-            res.status(200).json({
-                status: "true",
-                message: "Database not connected."
-            })
-        }
-
-        const employees = await EmpModel.find({})
+        if(mongoose.connection.readyState === 1){
+            const employees = await EmpModel.find({})
         res.status(200).json({
             status: "true",
             employees: employees
         })
+        }
+        res.status(200).json({
+            status: "true",
+            message: "Database not connected."
+        })   
 
     }catch(error){
         res.status(500).json({
