@@ -5,15 +5,15 @@ const mongoose = require("mongoose");
 
 userRoutes.post("/signup", async (req, res) => {
     try {
-        const newUser = new UserModel({
-            ...req.body
-        })
         if(mongoose.connection.readyState !== 1){
             res.status(201).json({
                 status: "true",
                 message: "Database not connected."
             })
         }
+        const newUser = new UserModel({
+            ...req.body
+        })
         await newUser.save();
         res.status(201).json({
             status: "true",
